@@ -8,7 +8,7 @@
 #define MATRIX_SIZE 4
 
 typedef int16_t matrix_in_t;
-typedef int32_t matrix_out_t;
+typedef int16_t matrix_out_t;
 
 void matrixSlicer(matrix_in_t* matrix_in_1,
                  matrix_in_t* matrix_in_2,
