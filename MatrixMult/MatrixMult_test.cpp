@@ -1,4 +1,4 @@
-#include "Stitcher.hpp"
+#include "MatrixMult.hpp"
 #include <iostream>
 
 #define TEST_SIZE 8
