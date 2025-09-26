@@ -42,10 +42,10 @@ if (offset_col==size)
     for (int i = 0; i < MATRIX_SIZE; ++i) {
         for (int j = 0; j < MATRIX_SIZE; ++j) {
             std::cout << matrix_out_1[i][j] << " ";
-            // if (matrix_out_1[i][j] != matrix_expected_1[i][j]) {
-            //     std::cerr << "Failure at: " << i << ", " << j << std::endl
-            //     << "expected: " << matrix_expected_1[i][j] << "received: " << matrix_out_1[i][j] << std::endl;
-            // }
+            if (matrix_out_1[i][j] != matrix_expected_1[i][j]) {
+                std::cerr << "Failure at: " << i << ", " << j << std::endl
+                << "expected: " << matrix_expected_1[i][j] << "received: " << matrix_out_1[i][j] << std::endl;
+            }
         }
         std::cout << std::endl;
     }

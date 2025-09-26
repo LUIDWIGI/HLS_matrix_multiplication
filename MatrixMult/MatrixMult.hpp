@@ -20,7 +20,7 @@ void matrixSlicer(matrix_in_t* matrix_in_1,
                  matrix_16_t matrix_out_1[MATRIX_SIZE][MATRIX_SIZE],
                  matrix_16_t matrix_out_2[MATRIX_SIZE][MATRIX_SIZE]);
 
-void matrix_mult(matrix_16_t matrix_in_1[MATRIX_SIZE][MATRIX_SIZE],
+void multiplier(matrix_16_t matrix_in_1[MATRIX_SIZE][MATRIX_SIZE],
                  matrix_16_t matrix_in_2[MATRIX_SIZE][MATRIX_SIZE],
                  matrix_32_t matrix_out[MATRIX_SIZE][MATRIX_SIZE]);
 

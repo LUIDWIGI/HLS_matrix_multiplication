@@ -1,6 +1,6 @@
 #include "MatrixMult.hpp"
 
-void matrix_mult(matrix_in_t matrix_in_1[MATRIX_SIZE][MATRIX_SIZE],
+void multiplier(matrix_in_t matrix_in_1[MATRIX_SIZE][MATRIX_SIZE],
                  matrix_in_t matrix_in_2[MATRIX_SIZE][MATRIX_SIZE],
                  matrix_out_t matrix_out[MATRIX_SIZE][MATRIX_SIZE]) {
 #pragma HLS INTERFACE mode=s_axilite port=matrix_out bundle=matrix_data 
