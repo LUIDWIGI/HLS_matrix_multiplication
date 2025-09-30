@@ -2,7 +2,7 @@
 #include <cstdint>
 #include <iostream>
 
-void matrixStitcher(matrix_out_t input_matrix[MATRIX_SIZE][MATRIX_SIZE],
+void matrixAdder(matrix_out_t input_matrix[MATRIX_SIZE][MATRIX_SIZE],
                     matrix_out_t output_matrix[MATRIX_SIZE][MATRIX_SIZE],
                     uint16_t size)
 {

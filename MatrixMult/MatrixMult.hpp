@@ -24,7 +24,7 @@ void multiplier(matrix_16_t matrix_in_1[MATRIX_SIZE][MATRIX_SIZE],
                  matrix_16_t matrix_in_2[MATRIX_SIZE][MATRIX_SIZE],
                  matrix_32_t matrix_out[MATRIX_SIZE][MATRIX_SIZE]);
 
-void matrixStitcher(matrix_out_t input_matrix[MATRIX_SIZE][MATRIX_SIZE],
+void matrixAdder(matrix_out_t input_matrix[MATRIX_SIZE][MATRIX_SIZE],
                     matrix_out_t output_matrix[MATRIX_SIZE][MATRIX_SIZE],
                     uint16_t size);
 #endif //MATRIX_HPP
