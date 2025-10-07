@@ -48,21 +48,29 @@ void MatrixMult(matrix_in_t* matrix_in_1,
     }
     else 
     {   
-        for(uint16_t j=0; j<size/MATRIX_SIZE; ++j)
+        for(uint16_t j=0; j<(size/MATRIX_SIZE)*(size/MATRIX_SIZE); ++j)
         {
-            matrix_out_t Matrix_4x4_final[MATRIX_SIZE][MATRIX_SIZE];
+            matrix_out_t Matrix_4x4_final[MATRIX_SIZE][MATRIX_SIZE] = {};
+            matrix_32_t matrix_4x4_out[MATRIX_SIZE][MATRIX_SIZE] = {};
 
             for(uint16_t i=0; i<(size/MATRIX_SIZE); ++i)
             {
                 matrix_16_t Matrix_4x4_1[MATRIX_SIZE][MATRIX_SIZE];
                 matrix_16_t Matrix_4x4_2[MATRIX_SIZE][MATRIX_SIZE];
-                matrix_32_t matrix_4x4_out[MATRIX_SIZE][MATRIX_SIZE];
 
                 matrixSlicer(matrix_in_1, matrix_in_2, size, Matrix_4x4_1, Matrix_4x4_2);
                 multiplier(Matrix_4x4_1, Matrix_4x4_2, matrix_4x4_out);
                 matrixAdder(matrix_4x4_out, Matrix_4x4_final, size);
             }
-
+            std::cout << "Resultant 4x4 Matrix Block: " << std::endl;
+            for (uint16_t row = 0; row < MATRIX_SIZE; ++row) {
+                for (uint16_t col = 0; col < MATRIX_SIZE; ++col) {
+                    std::cout << Matrix_4x4_final[row][col] << " ";
+                }
+                std::cout << std::endl;
+            }
+            std::cout << "." <<std::endl << "." << std::endl;
+            
             matrixStitcher(Matrix_4x4_final, size, matrix_out);
         }
     }
