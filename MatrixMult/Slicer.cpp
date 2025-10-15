@@ -7,9 +7,9 @@ void matrixSlicer(matrix_in_t* matrix_in_1,
                  uint32_t size,
                  matrix_16_t matrix_out_1[MATRIX_SIZE][MATRIX_SIZE],
                  matrix_16_t matrix_out_2[MATRIX_SIZE][MATRIX_SIZE]) {
-#pragma HLS INTERFACE mode=ap_hs port=matrix_out_1
-#pragma HLS INTERFACE mode=ap_hs port=matrix_out_2
-#pragma HLS INTERFACE mode=s_axilite port=return bundle=matrix_data
+// #pragma HLS INTERFACE mode=ap_hs port=matrix_out_1
+// #pragma HLS INTERFACE mode=ap_hs port=matrix_out_2
+// #pragma HLS INTERFACE mode=s_axilite port=return bundle=matrix_data
 
 static uint16_t arow = 0;
 static uint16_t acol = 0;

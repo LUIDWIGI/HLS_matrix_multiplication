@@ -3,6 +3,18 @@
 
 #define TEST_SIZE 8
 
+void softwareTester(matrix_in_t* input1, matrix_in_t* input2, matrix_out_t* output, uint16_t size)
+{
+    for (uint16_t i = 0; i < size; ++i) {
+        for (uint16_t j = 0; j < size; ++j) {
+            output[i * size + j] = 0;
+            for (uint16_t k = 0; k < size; ++k) {
+                output[i * size + j] += input1[i * size + k] * input2[k * size + j];
+            }
+        }
+    }
+}
+
 //####______ defining matrices ______####//
 matrix_in_t matrix_1[TEST_SIZE][TEST_SIZE] = {
     {1, 2, 3, 4, 5, 6, 7, 8},
@@ -44,16 +56,24 @@ matrix_out_t finalMatrix[TEST_SIZE][TEST_SIZE] = {};
 int main() {
     
     MatrixMult(&matrix_1[0][0], &matrix_2[0][0], TEST_SIZE, &finalMatrix[0][0]);
+    matrix_out_t softwareResult[TEST_SIZE * TEST_SIZE] = {};
+    matrix_out_t softwareResult3D[TEST_SIZE][TEST_SIZE] = {};
+    softwareTester(&matrix_1[0][0], &matrix_2[0][0], &softwareResult[0], TEST_SIZE);
+    for (int i = 0; i < TEST_SIZE; ++i) {
+        for (int j = 0; j < TEST_SIZE; ++j) {
+            softwareResult3D[i][j] = softwareResult[i * TEST_SIZE + j];
+        }
+    }
 
 //####________ Printing output ________####//
     std::cout << "Resultant Matrix:" << std::endl;
     for (int i = 0; i < TEST_SIZE; ++i) {
         for (int j = 0; j < TEST_SIZE; ++j) {
             std::cout << finalMatrix[i][j] << " ";
-            // if (matrix_out_1[i][j] != matrix_expected_1[i][j]) {
-            //     std::cerr << "Failure at: " << i << ", " << j << std::endl
-            //     << "expected: " << matrix_expected_1[i][j] << "received: " << matrix_out_1[i][j] << std::endl;
-            // }
+            if (finalMatrix[i][j] != softwareResult3D[i][j]) {
+                std::cerr << "Failure at: " << i << ", " << j << std::endl
+                << "expected: " << softwareResult3D[i][j] << "   received: " << finalMatrix[i][j] << std::endl;
+            }
         }
         std::cout << std::endl;
     }
