@@ -4,8 +4,10 @@
 #include <cstdint>
 #include <stdint.h>
 #include <ap_int.h>
+#include <iostream>
 
 #define MATRIX_SIZE 4
+#define MAX_MATRIX_SIZE 16
 
 typedef int16_t matrix_in_t;
 typedef int16_t matrix_16_t;
@@ -28,8 +30,7 @@ void multiplier(matrix_16_t matrix_in_1[MATRIX_SIZE][MATRIX_SIZE],
                     matrix_32_t matrix_out[MATRIX_SIZE][MATRIX_SIZE]);
 
 void matrixAdder(matrix_out_t input_matrix[MATRIX_SIZE][MATRIX_SIZE],
-                    matrix_out_t output_matrix[MATRIX_SIZE][MATRIX_SIZE],
-                    uint16_t size);
+                    matrix_out_t output_matrix[MATRIX_SIZE][MATRIX_SIZE]);
 
 void matrixStitcher(matrix_32_t input_4x4_matrix[MATRIX_SIZE][MATRIX_SIZE],
                         uint16_t size,

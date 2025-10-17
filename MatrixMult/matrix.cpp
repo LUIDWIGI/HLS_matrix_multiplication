@@ -3,14 +3,15 @@
 void multiplier(matrix_in_t matrix_in_1[MATRIX_SIZE][MATRIX_SIZE],
                  matrix_in_t matrix_in_2[MATRIX_SIZE][MATRIX_SIZE],
                  matrix_out_t matrix_out[MATRIX_SIZE][MATRIX_SIZE]) {
+#pragma HLS INLINE
 // #pragma HLS INTERFACE mode=s_axilite port=matrix_out bundle=matrix_data 
 // #pragma HLS INTERFACE mode=s_axilite port=matrix_in_1 bundle=matrix_data 
 // #pragma HLS INTERFACE mode=s_axilite port=matrix_in_2 bundle=matrix_data 
 // #pragma HLS INTERFACE mode=s_axilite port=return bundle=matrix_data
 
-#pragma HLS array_partition variable=matrix_in_1 complete dim=0
-#pragma HLS array_partition variable=matrix_in_2 complete dim=0
-#pragma HLS array_partition variable=matrix_out complete dim=0
+#pragma HLS ARRAY_PARTITION variable=matrix_in_1 dim=0 type=complete
+#pragma HLS ARRAY_PARTITION variable=matrix_in_2 dim=0 type=complete
+#pragma HLS ARRAY_PARTITION variable=matrix_out dim=0 type=complete
 
     for (ap_uint<6> row = 0; row < MATRIX_SIZE; ++row) {
         //#pragma HLS LOOP_FLATTEN ON
