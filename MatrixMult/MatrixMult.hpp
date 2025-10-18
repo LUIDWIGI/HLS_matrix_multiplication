@@ -7,7 +7,7 @@
 #include <iostream>
 
 #define MATRIX_SIZE 4
-#define MAX_MATRIX_SIZE 8
+#define MAX_MATRIX_SIZE 16
 
 typedef int16_t matrix_in_t;
 typedef int16_t matrix_16_t;
