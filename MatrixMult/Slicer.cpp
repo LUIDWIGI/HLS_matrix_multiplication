@@ -25,6 +25,7 @@ static uint16_t counter = 0;
     {
         for (uint16_t col=0; col<MATRIX_SIZE; ++col)
         {
+            #pragma HLS PIPELINE II=2
             matrix_out_1[row][col] = matrix_in_1[(row+arow)*MAX_MATRIX_SIZE + (col+acol)];
             matrix_out_2[row][col] = matrix_in_2[(row+brow)*MAX_MATRIX_SIZE + (col+bcol)];
         }
