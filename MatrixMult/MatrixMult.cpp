@@ -15,6 +15,9 @@ void MatrixMult(matrix_in_t* matrix_in_1,
 #pragma HLS INTERFACE mode=m_axi port=matrix_in_1 depth=(MAX_MATRIX_SIZE*MAX_MATRIX_SIZE) max_widen_bitwidth=64 bundle=matrix_a
 #pragma HLS INTERFACE mode=m_axi port=matrix_in_2 depth=(MAX_MATRIX_SIZE*MAX_MATRIX_SIZE) max_widen_bitwidth=64 bundle=matrix_b
 #pragma HLS INTERFACE mode=m_axi port=matrix_out depth=(MAX_MATRIX_SIZE*MAX_MATRIX_SIZE) max_widen_bitwidth=64 bundle=matrix_c
+
+// #pragma HLS CACHE port=matrix_in_1 lines=32 depth=64
+// #pragma HLS CACHE port=matrix_in_2 lines=32 depth=64
  
     for(uint16_t j=0; j<(size/MATRIX_SIZE)*(size/MATRIX_SIZE); ++j)
     {
