@@ -1,7 +1,7 @@
 #include "MatrixMult.hpp"
 #include <iostream>
 
-#define TEST_SIZE 24
+#define TEST_SIZE 8
 
 void softwareTester(matrix_in_t* input1, matrix_in_t* input2, matrix_out_t* output, uint16_t size)
 {
@@ -58,7 +58,8 @@ int main() {
         //std::cout << "matrix_2[" << i << "] = " << matrix_2[i] << std::endl;
         finalMatrix[i] = 0;
     }
-
+    // uint16_t matrix_size = TEST_SIZE;
+    // if(matrix_size % 4 != 0) {matrix_size+=(matrix_size % 4)} //ensure matrix_size is divisable by 2
     MatrixMult(matrix_1, matrix_2, TEST_SIZE, finalMatrix);
 
     matrix_out_t softwareResult[TEST_SIZE * TEST_SIZE] = {};

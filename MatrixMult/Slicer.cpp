@@ -1,8 +1,8 @@
 #include "MatrixMult.hpp"
 #include <cstdint>
 
-void matrixSlicer(matrix_in_t* matrix_in_1,
-                 matrix_in_t* matrix_in_2,
+void matrixSlicer(matrix_in_t matrix_in_1[MAX_MATRIX_SIZE][MAX_MATRIX_SIZE],
+                 matrix_in_t matrix_in_2[MAX_MATRIX_SIZE][MAX_MATRIX_SIZE],
                  uint32_t size,
                  matrix_16_t matrix_out_1[MATRIX_SIZE][MATRIX_SIZE],
                  matrix_16_t matrix_out_2[MATRIX_SIZE][MATRIX_SIZE]) {
@@ -27,8 +27,8 @@ static uint16_t counter = 0;
         #pragma HLS LOOP_flatten
         for (uint16_t col=0; col<MATRIX_SIZE; ++col)
         {
-            matrix_out_1[row][col] = matrix_in_1[(row+arow)*size + (col+acol)];
-            matrix_out_2[row][col] = matrix_in_2[(row+brow)*size + (col+bcol)];
+            matrix_out_1[row][col] = matrix_in_1[row+arow][col+acol];
+            matrix_out_2[row][col] = matrix_in_2[row+brow][col+bcol];
         }
     }
 

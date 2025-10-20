@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <ap_int.h>
 #include <iostream>
+#include <assert.h>
 
 #define MATRIX_SIZE 4
 #define MAX_MATRIX_SIZE 16
@@ -19,8 +20,8 @@ void MatrixMult(matrix_in_t* matrix_1,
                 uint16_t size,
                 matrix_out_t* matrix_out);
 
-void matrixSlicer(matrix_in_t* matrix_in_1,
-                    matrix_in_t* matrix_in_2,
+void matrixSlicer(matrix_in_t matrix_in_1[MAX_MATRIX_SIZE][MAX_MATRIX_SIZE],
+                    matrix_in_t matrix_in_2[MAX_MATRIX_SIZE][MAX_MATRIX_SIZE],
                     uint32_t size,
                     matrix_16_t matrix_out_1[MATRIX_SIZE][MATRIX_SIZE],
                     matrix_16_t matrix_out_2[MATRIX_SIZE][MATRIX_SIZE]);
