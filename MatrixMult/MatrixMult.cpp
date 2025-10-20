@@ -15,17 +15,18 @@ void bramDownloader(matrix_in_t* input1,
                     matrix_16_t output2[MAX_MATRIX_SIZE][MAX_MATRIX_SIZE])
 {
 // #pragma HLS INLINE
-#pragma HLS ARRAY_PARTITION variable=output1 dim=1 type=complete
-// #pragma HLS BIND_STORAGE variable=output1 type=ram_2p impl=bram
-#pragma HLS ARRAY_PARTITION variable=output2 dim=1 type=complete
-// #pragma HLS BIND_STORAGE variable=output2 type=ram_2p impl=bram
+#pragma HLS ARRAY_PARTITION variable=output1 dim=2 factor=(MAX_MATRIX_SIZE/MATRIX_SIZE) type=cyclic
+#pragma HLS BIND_STORAGE variable=output1 type=ram_2p impl=bram
+#pragma HLS ARRAY_PARTITION variable=output2 dim=2 factor=(MAX_MATRIX_SIZE/MATRIX_SIZE) type=cyclic
+#pragma HLS BIND_STORAGE variable=output2 type=ram_2p impl=bram
 
     std::cout << "output matrix 1:" << std::endl;
     assert(MAX_MATRIX_SIZE % 2 == 0);
-    assert(size % 4 == 0);
+    assert(size % 2 == 0);
     for(uint16_t r=0; r<size; ++r)
     {
         #pragma HLS LOOP_TRIPCOUNT max=MAX_MATRIX_SIZE
+        assert(size % 2 == 0);
         for(uint16_t c=0; c<size; ++c)
         {
             #pragma HLS LOOP_TRIPCOUNT max=MAX_MATRIX_SIZE
@@ -42,8 +43,8 @@ void MatrixMult(matrix_in_t* matrix_in_1,
                 uint16_t size,
                 matrix_out_t* matrix_out)
 {
-#pragma HLS INTERFACE mode=m_axi port=matrix_in_1 bundle=matrix_a depth=(MAX_MATRIX_SIZE*MAX_MATRIX_SIZE) max_read_burst_length=64 max_widen_bitwidth=64
-#pragma HLS INTERFACE mode=m_axi port=matrix_in_2 bundle=matrix_b depth=(MAX_MATRIX_SIZE*MAX_MATRIX_SIZE) max_read_burst_length=64 max_widen_bitwidth=64
+#pragma HLS INTERFACE mode=m_axi port=matrix_in_1 bundle=matrix_a depth=(MAX_MATRIX_SIZE*MAX_MATRIX_SIZE) max_read_burst_length=64 max_widen_bitwidth=64 offset=slave
+#pragma HLS INTERFACE mode=m_axi port=matrix_in_2 bundle=matrix_b depth=(MAX_MATRIX_SIZE*MAX_MATRIX_SIZE) max_read_burst_length=64 max_widen_bitwidth=64 offset=slave
 #pragma HLS INTERFACE mode=m_axi port=matrix_out bundle=matrix_c depth=(MAX_MATRIX_SIZE*MAX_MATRIX_SIZE) max_read_burst_length=64 max_widen_bitwidth=64
 
 // #pragma HLS CACHE port=matrix_in_1 lines=32 depth=64
