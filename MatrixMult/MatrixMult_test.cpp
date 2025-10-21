@@ -1,7 +1,7 @@
 #include "MatrixMult.hpp"
 #include <iostream>
 
-#define TEST_SIZE 16
+#define TEST_SIZE 128
 
 void softwareTester(matrix_in_t* input1, matrix_in_t* input2, matrix_out_t* output, uint16_t size)
 {
@@ -78,7 +78,7 @@ int main() {
 
     for (int i = 0; i < TEST_SIZE; ++i) {
         for (int j = 0; j < TEST_SIZE; ++j) {
-            std::cout << finalMatrix[i * TEST_SIZE + j] << " ";
+            // std::cout << finalMatrix[i * TEST_SIZE + j] << " ";
 
             if (finalMatrix[i * TEST_SIZE + j] != softwareResult3D[i][j]) {
                 std::cerr << "Failure at: " << i << ", " << j << std::endl
@@ -88,6 +88,13 @@ int main() {
         }
         std::cout << std::endl;
     }
+    
+    delete[] matrix_1;
+    delete[] matrix_2;
+    delete[] finalMatrix;
+    matrix_1 = nullptr;
+    matrix_2 = nullptr;
+    finalMatrix = nullptr;
 
     if (hasFailed) {
         return 1;

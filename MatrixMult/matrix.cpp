@@ -3,22 +3,15 @@
 void multiplier(matrix_in_t matrix_in_1[MATRIX_SIZE][MATRIX_SIZE],
                  matrix_in_t matrix_in_2[MATRIX_SIZE][MATRIX_SIZE],
                  matrix_out_t matrix_out[MATRIX_SIZE][MATRIX_SIZE]) {
-//#pragma HLS INLINE
-// #pragma HLS INTERFACE mode=s_axilite port=matrix_out bundle=matrix_data 
-// #pragma HLS INTERFACE mode=s_axilite port=matrix_in_1 bundle=matrix_data 
-// #pragma HLS INTERFACE mode=s_axilite port=matrix_in_2 bundle=matrix_data 
-// #pragma HLS INTERFACE mode=s_axilite port=return bundle=matrix_data
 
 #pragma HLS ARRAY_PARTITION variable=matrix_in_1 dim=0 type=complete
 #pragma HLS ARRAY_PARTITION variable=matrix_in_2 dim=0 type=complete
 #pragma HLS ARRAY_PARTITION variable=matrix_out dim=0 type=complete
 
-    for (ap_uint<6> row = 0; row < MATRIX_SIZE; ++row) {
-        for (ap_uint<6> col = 0; col < MATRIX_SIZE; ++col) {
-        // #pragma HLS LOOP_FLATTEN ON
-        // #pragma HLS PIPELINE II=1
+    for (ap_uint<4> row = 0; row < MATRIX_SIZE; ++row) {
+        for (ap_uint<4> col = 0; col < MATRIX_SIZE; ++col) {
             matrix_out_t sum = 0;
-            for (ap_uint<6> k = 0; k < MATRIX_SIZE; ++k) {
+            for (ap_uint<4> k = 0; k < MATRIX_SIZE; ++k) {
                 #pragma HLS pipeline II=1
                 sum += matrix_in_1[row][k] * matrix_in_2[k][col];
             }

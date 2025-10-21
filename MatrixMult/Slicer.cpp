@@ -15,28 +15,23 @@ void matrixSlicer(matrix_in_t* matrix_in_1,
 // #pragma HLS INTERFACE mode=ap_hs port=matrix_out_2
 // #pragma HLS INTERFACE mode=s_axilite port=return bundle=matrix_data
 
-static uint16_t arow = 0;
-static uint16_t acol = 0;
-static uint16_t acount = 0;
-static uint16_t brow = 0;
-static uint16_t bcol = 0;
-static uint16_t counter = 0;
+static ap_uint<13> arow = 0;
+static ap_uint<13> offset_a = 0;
+static ap_uint<13> bcol = 0;
 
-    for (uint16_t row=0; row<MATRIX_SIZE; ++row)
+    for (ap_uint<4> row=0; row<MATRIX_SIZE; ++row)
     {
         #pragma HLS LOOP_flatten
-        for (uint16_t col=0; col<MATRIX_SIZE; ++col)
+        for (ap_uint<4> col=0; col<MATRIX_SIZE; ++col)
         {
-            matrix_out_1[row][col] = matrix_in_1[(row+arow)*size + (col+acol)];
-            matrix_out_2[row][col] = matrix_in_2[(row+brow)*size + (col+bcol)];
+            matrix_out_1[row][col] = matrix_in_1[(row+arow)*size + (col+offset_a)];
+            matrix_out_2[row][col] = matrix_in_2[(row+offset_a)*size + (col+bcol)];
         }
     }
 
-    acol += MATRIX_SIZE;
-    brow += MATRIX_SIZE;
-    if (acol >= size) {
-        acol = 0;
-        brow = 0;
+    offset_a += MATRIX_SIZE;
+    if (offset_a >= size) {
+        offset_a = 0;
         bcol += MATRIX_SIZE;
         if (bcol >= size) {
             bcol = 0;
