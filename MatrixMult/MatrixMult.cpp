@@ -15,9 +15,9 @@ void MatrixMult(matrix_in_t* matrix_in_1,
 #pragma HLS CACHE port=matrix_in_2 depth=MAX_MATRIX_SIZE lines=MATRIX_SIZE*4
 #pragma HLS CACHE port=matrix_in_1 depth=MAX_MATRIX_SIZE lines=MATRIX_SIZE*4
     assert(size%2==0);
-#pragma HLS INTERFACE mode=m_axi port=matrix_in_1 bundle=matrix_a depth=(MAX_MATRIX_SIZE*MAX_MATRIX_SIZE) max_widen_bitwidth=64
-#pragma HLS INTERFACE mode=m_axi port=matrix_in_2 bundle=matrix_b depth=(MAX_MATRIX_SIZE*MAX_MATRIX_SIZE) max_widen_bitwidth=64
-#pragma HLS INTERFACE mode=m_axi port=matrix_out bundle=matrix_c depth=(MAX_MATRIX_SIZE*MAX_MATRIX_SIZE) max_widen_bitwidth=128
+#pragma HLS INTERFACE mode=m_axi port=matrix_in_1 bundle=matrix_a depth=(MAX_MATRIX_SIZE*MAX_MATRIX_SIZE) max_read_burst_length=128 max_widen_bitwidth=128 max_write_burst_length=128
+#pragma HLS INTERFACE mode=m_axi port=matrix_in_2 bundle=matrix_b depth=(MAX_MATRIX_SIZE*MAX_MATRIX_SIZE) max_read_burst_length=128 max_widen_bitwidth=128 max_write_burst_length=128
+#pragma HLS INTERFACE mode=m_axi port=matrix_out bundle=matrix_c depth=(MAX_MATRIX_SIZE*MAX_MATRIX_SIZE) max_read_burst_length=128 max_widen_bitwidth=128 max_write_burst_length=128
 
     for(ap_uint<17> j=0; j<(size/MATRIX_SIZE)*(size/MATRIX_SIZE); ++j)
     {
