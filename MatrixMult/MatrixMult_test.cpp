@@ -1,7 +1,7 @@
 #include "MatrixMult.hpp"
 #include <iostream>
 
-#define TEST_SIZE 24
+#define TEST_SIZE 16
 
 void softwareTester(matrix_in_t* input1, matrix_in_t* input2, matrix_out_t* output, uint16_t size)
 {

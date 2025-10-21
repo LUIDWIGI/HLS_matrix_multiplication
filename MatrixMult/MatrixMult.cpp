@@ -12,6 +12,8 @@ void MatrixMult(matrix_in_t* matrix_in_1,
                 uint16_t size,
                 matrix_out_t* matrix_out)
 {
+#pragma HLS INTERFACE mode=s_axilite port=size bundle=ctrl
+#pragma HLS INTERFACE mode=s_axilite port=return bundle=ctrl
 #pragma HLS INTERFACE mode=m_axi port=matrix_in_1 depth=(MAX_MATRIX_SIZE*MAX_MATRIX_SIZE) max_widen_bitwidth=64 bundle=matrix_a
 #pragma HLS INTERFACE mode=m_axi port=matrix_in_2 depth=(MAX_MATRIX_SIZE*MAX_MATRIX_SIZE) max_widen_bitwidth=64 bundle=matrix_b
 #pragma HLS INTERFACE mode=m_axi port=matrix_out depth=(MAX_MATRIX_SIZE*MAX_MATRIX_SIZE) max_widen_bitwidth=64 bundle=matrix_c
