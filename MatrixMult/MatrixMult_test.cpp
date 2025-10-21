@@ -1,7 +1,7 @@
 #include "MatrixMult.hpp"
 #include <iostream>
 
-#define TEST_SIZE 8
+#define TEST_SIZE 16
 
 void softwareTester(matrix_in_t* input1, matrix_in_t* input2, matrix_out_t* output, uint16_t size)
 {
@@ -16,27 +16,17 @@ void softwareTester(matrix_in_t* input1, matrix_in_t* input2, matrix_out_t* outp
 }
 
 //####______ defining matrices ______####//
-matrix_in_t matrix_1[TEST_SIZE][TEST_SIZE] = {
-    {1, 2, 3, 4, 5, 6, 7, 8},
-    {9, 10, 11, 12, 13, 14, 15, 16},
-    {17, 18, 19, 20, 21, 22, 23, 24},
-    {25, 26, 27, 28, 29, 30, 31, 32},
-    {33, 34, 35, 36, 37, 38, 39, 40},
-    {41, 42, 43, 44, 45, 46, 47, 48},
-    {49, 50, 51, 52, 53, 54, 55, 56},
-    {57, 58, 59, 60, 61, 62, 63, 64}
-};
+matrix_in_t* matrix_1;
+matrix_in_t* matrix_2;
 
-matrix_in_t matrix_2[TEST_SIZE][TEST_SIZE] = {
-    {1, 2, 3, 4, 5, 6, 7, 8},
-    {9, 10, 11, 12, 13, 14, 15, 16},
-    {17, 18, 19, 20, 21, 22, 23, 24},
-    {25, 26, 27, 28, 29, 30, 31, 32},
-    {33, 34, 35, 36, 37, 38, 39, 40},
-    {41, 42, 43, 44, 45, 46, 47, 48},
-    {49, 50, 51, 52, 53, 54, 55, 56},
-    {57, 58, 59, 60, 61, 62, 63, 64}
-};
+    // {1, 2, 3, 4, 5, 6, 7, 8},
+    // {9, 10, 11, 12, 13, 14, 15, 16},
+    // {17, 18, 19, 20, 21, 22, 23, 24},
+    // {25, 26, 27, 28, 29, 30, 31, 32},
+    // {33, 34, 35, 36, 37, 38, 39, 40},
+    // {41, 42, 43, 44, 45, 46, 47, 48},
+    // {49, 50, 51, 52, 53, 54, 55, 56},
+    // {57, 58, 59, 60, 61, 62, 63, 64}
 // {
 //     {65, 66, 67, 68, 69, 70, 71, 72},
 //     {73, 74, 75, 76, 77, 78, 79, 80},
@@ -48,36 +38,61 @@ matrix_in_t matrix_2[TEST_SIZE][TEST_SIZE] = {
 //     {121, 122, 123, 124, 125, 126, 127, 128}
 // };
 
-matrix_out_t finalMatrix[TEST_SIZE][TEST_SIZE] = {};
+matrix_out_t* finalMatrix;
 
 
 
 //####_______ main function ______####//
 int main() {
-    
-    MatrixMult(&matrix_1[0][0], &matrix_2[0][0], TEST_SIZE, &finalMatrix[0][0]);
+    // Create test arrays
+    matrix_1 = new matrix_in_t[MAX_MATRIX_SIZE*MAX_MATRIX_SIZE];
+
+    matrix_2 = new matrix_in_t[MAX_MATRIX_SIZE*MAX_MATRIX_SIZE];
+
+    finalMatrix = new matrix_out_t[MAX_MATRIX_SIZE*MAX_MATRIX_SIZE];
+
+    // Write test data
+    for (int i = 0; i < TEST_SIZE * TEST_SIZE; ++i) {
+        matrix_1[i] = i + 1;
+        matrix_2[i] = i + 1;
+        //std::cout << "matrix_2[" << i << "] = " << matrix_2[i] << std::endl;
+        finalMatrix[i] = 0;
+    }
+
+    MatrixMult(matrix_1, matrix_2, TEST_SIZE, finalMatrix);
+
     matrix_out_t softwareResult[TEST_SIZE * TEST_SIZE] = {};
     matrix_out_t softwareResult3D[TEST_SIZE][TEST_SIZE] = {};
-    softwareTester(&matrix_1[0][0], &matrix_2[0][0], &softwareResult[0], TEST_SIZE);
+
+    softwareTester(matrix_1, matrix_2, softwareResult, TEST_SIZE);
     for (int i = 0; i < TEST_SIZE; ++i) {
         for (int j = 0; j < TEST_SIZE; ++j) {
             softwareResult3D[i][j] = softwareResult[i * TEST_SIZE + j];
         }
     }
 
+    bool hasFailed = false;
 //####________ Printing output ________####//
+    std::cout << std::endl;
     std::cout << "Resultant Matrix:" << std::endl;
+
     for (int i = 0; i < TEST_SIZE; ++i) {
         for (int j = 0; j < TEST_SIZE; ++j) {
-            std::cout << finalMatrix[i][j] << " ";
-            if (finalMatrix[i][j] != softwareResult3D[i][j]) {
+            std::cout << finalMatrix[i * TEST_SIZE + j] << " ";
+
+            if (finalMatrix[i * TEST_SIZE + j] != softwareResult3D[i][j]) {
                 std::cerr << "Failure at: " << i << ", " << j << std::endl
-                << "expected: " << softwareResult3D[i][j] << "   received: " << finalMatrix[i][j] << std::endl;
+                << "expected: " << softwareResult3D[i][j] << "   received: " << finalMatrix[i * TEST_SIZE + j] << std::endl;
+                hasFailed = true;
             }
         }
         std::cout << std::endl;
     }
 
-    return 0;
+    if (hasFailed) {
+        return 1;
+    } else {
+        return 0;
+    }
 }
 
