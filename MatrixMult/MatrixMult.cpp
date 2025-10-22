@@ -12,22 +12,20 @@ void MatrixMult(matrix_in_t* matrix_in_1,
                 uint16_t size,
                 matrix_out_t* matrix_out)
 {
-#pragma HLS INTERFACE mode=s_axilite port=size bundle=ctrl
-#pragma HLS INTERFACE mode=s_axilite port=return bundle=ctrl
-#pragma HLS INTERFACE mode=m_axi port=matrix_in_1 depth=(MAX_MATRIX_SIZE*MAX_MATRIX_SIZE) max_widen_bitwidth=64 bundle=matrix_a
-#pragma HLS INTERFACE mode=m_axi port=matrix_in_2 depth=(MAX_MATRIX_SIZE*MAX_MATRIX_SIZE) max_widen_bitwidth=64 bundle=matrix_b
-#pragma HLS INTERFACE mode=m_axi port=matrix_out depth=(MAX_MATRIX_SIZE*MAX_MATRIX_SIZE) max_widen_bitwidth=64 bundle=matrix_c
+#pragma HLS CACHE port=matrix_in_2 depth=MAX_MATRIX_SIZE lines=MATRIX_SIZE*4
+#pragma HLS CACHE port=matrix_in_1 depth=MAX_MATRIX_SIZE lines=MATRIX_SIZE*4
+    assert(size%2==0);
+#pragma HLS INTERFACE mode=m_axi port=matrix_in_1 bundle=matrix_a depth=(MAX_MATRIX_SIZE*MAX_MATRIX_SIZE) max_read_burst_length=128 max_widen_bitwidth=128 max_write_burst_length=128
+#pragma HLS INTERFACE mode=m_axi port=matrix_in_2 bundle=matrix_b depth=(MAX_MATRIX_SIZE*MAX_MATRIX_SIZE) max_read_burst_length=128 max_widen_bitwidth=128 max_write_burst_length=128
+#pragma HLS INTERFACE mode=m_axi port=matrix_out bundle=matrix_c depth=(MAX_MATRIX_SIZE*MAX_MATRIX_SIZE) max_read_burst_length=128 max_widen_bitwidth=128 max_write_burst_length=128
 
-// #pragma HLS CACHE port=matrix_in_1 lines=32 depth=64
-// #pragma HLS CACHE port=matrix_in_2 lines=32 depth=64
- 
-    for(uint16_t j=0; j<(size/MATRIX_SIZE)*(size/MATRIX_SIZE); ++j)
+    for(ap_uint<17> j=0; j<(size/MATRIX_SIZE)*(size/MATRIX_SIZE); ++j)
     {
     #pragma HLS dataflow
     #pragma HLS LOOP_TRIPCOUNT max=(MAX_MATRIX_SIZE/MATRIX_SIZE * MAX_MATRIX_SIZE/MATRIX_SIZE)
         matrix_out_t Matrix_4x4_final[MATRIX_SIZE][MATRIX_SIZE] = {};
         #pragma HLS ARRAY_PARTITION variable=Matrix_4x4_final dim=0 type=complete   
-        for(uint16_t i=0; i<(size/MATRIX_SIZE); ++i)
+        for(ap_uint<11> i=0; i<(size/MATRIX_SIZE); ++i)
         {
             #pragma HLS LOOP_TRIPCOUNT max=MAX_MATRIX_SIZE/MATRIX_SIZE
             #pragma HLS PIPELINE
