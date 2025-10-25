@@ -15,7 +15,7 @@ typedef int16_t matrix_16_t;
 typedef int32_t matrix_out_t;
 typedef int32_t matrix_32_t;
 
-void MatrixMult(matrix_in_t* matrix_1,
+void MatrixMult_NoCache(matrix_in_t* matrix_1,
                 matrix_in_t* matrix_2,
                 uint16_t size,
                 matrix_out_t* matrix_out);
