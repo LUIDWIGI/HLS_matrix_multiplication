@@ -1,6 +1,7 @@
 #include "matrixMultDriver.h"
 
-//#ifdef XMATRIXMULT_H
+#ifdef XMATRIXMULT_H
+
 int init_maxtrix_mult(XMatrixmult *matrixMultPtr, UINTPTR ctrl_baseaddr) {
   int status;
   status = XMatrixmult_Initialize(matrixMultPtr, ctrl_baseaddr);
@@ -64,9 +65,9 @@ int compute_matrix(XMatrixmult *matrixMultPtr, s16 *A, s16 *B, s32 *C,
     return XST_SUCCESS;
 }
 
-//#endif
+#endif
 
-//#ifdef XMATRIXMULT_NOCACHE_H
+#ifdef XMATRIXMULT_NOCACHE_H
 
 int init_maxtrix_mult_no_cache(XMatrixmult_nocache *matrixMultPtr, UINTPTR ctrl_baseaddr) {
   int status;
@@ -131,7 +132,7 @@ int compute_matrix_no_cache(XMatrixmult_nocache *matrixMultPtr, s16 *A, s16 *B, 
     return XST_SUCCESS;
 }
 
-//endif
+#endif
 
 int extend_with_zeros(s16 **matrix_A, s16 **matrix_B, u32 original_rows_A,
                       u32 original_cols_A, u32 original_rows_B,
